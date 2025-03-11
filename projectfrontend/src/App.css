@@ -1,0 +1,443 @@
+/* frontend/src/App.css */
+:root {
+  --primary-color: #4a90e2;
+  --secondary-color: #2c3e50;
+  --background-color: #f5f7fa;
+  --text-color: #333;
+  --error-color: #e74c3c;
+  --success-color: #2ecc71;
+  --border-color: #ddd;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--secondary-color);
+  padding: 15px 20px;
+  color: white;
+}
+
+.navbar-brand a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.nav-link:hover, button.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+button.nav-link {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Auth Forms */
+.auth-form {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--secondary-color);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.auth-form button:hover {
+  background-color: #3a7bc8;
+}
+
+.error {
+  color: var(--error-color);
+  background-color: rgba(231, 76, 60, 0.1);
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+/* Code Editor */
+.code-editor {
+  margin: 20px 0;
+}
+
+.code-editor h2 {
+  margin-bottom: 20px;
+  color: var(--secondary-color);
+}
+
+.editor-container {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  margin-bottom: 20px;
+}
+
+.button-container button {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button-container button:hover {
+  background-color: #3a7bc8;
+}
+
+.button-container button:disabled {
+  background-color: #a4c5f1;
+  cursor: not-allowed;
+}
+
+.output-container {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.output-container h3 {
+  margin-bottom: 10px;
+  color: var(--secondary-color);
+}
+
+.output-container pre {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  overflow: auto;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Problem List */
+.problem-list {
+  padding: 20px 0;
+}
+
+.problem-list h2 {
+  margin-bottom: 20px;
+  color: var(--secondary-color);
+  text-align: center;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.problem-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.problem-card:hover {
+  transform: translateY(-5px);
+}
+
+.problem-card h3 {
+  color: var(--secondary-color);
+  margin-bottom: 15px;
+}
+
+.problem-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.problem-link:hover {
+  background-color: #3a7bc8;
+}
+
+/* Problem View */
+.problem-view {
+  padding: 20px 0;
+}
+
+.problem-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 992px) {
+  .problem-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.problem-description {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.problem-description h2 {
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.description-content {
+  line-height: 1.6;
+}
+
+.description-content p {
+  margin-bottom: 15px;
+}
+
+.example {
+  margin-top: 20px;
+}
+
+.example h3 {
+  color: var(--secondary-color);
+  margin-bottom: 10px;
+}
+
+.example-block {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.code-execution {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.code-execution h3 {
+  color: var(--secondary-color);
+  margin-bottom: 15px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.run-btn, .submit-btn {
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.run-btn {
+  background-color: #4caf50;
+}
+
+.run-btn:hover {
+  background-color: #3d8b40;
+}
+
+.submit-btn {
+  background-color: var(--primary-color);
+}
+
+.submit-btn:hover {
+  background-color: #3a7bc8;
+}
+
+.results-container {
+  margin-top: 20px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 15px;
+}
+
+.output {
+  margin-bottom: 20px;
+}
+
+.output h4, .test-results h4 {
+  color: var(--secondary-color);
+  margin-bottom: 10px;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.results-table th, .results-table td {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.results-table th {
+  background-color: #f5f5f5;
+}
+
+.results-table .passed {
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.results-table .failed {
+  background-color: rgba(244, 67, 54, 0.1);
+}
+
+.status {
+  font-weight: bold;
+}
+
+.status.passed {
+  color: #4caf50;
+}
+
+.status.failed {
+  color: #f44336;
+}
+
+.stats {
+  margin-top: 15px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.loading, .error {
+  text-align: center;
+  margin: 40px 0;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.error-output {
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 4px;
+  background-color: rgba(244, 67, 54, 0.05);
+  border-left: 4px solid var(--error-color);
+}
+
+.error-output h3 {
+  color: var(--error-color);
+  margin-bottom: 10px;
+}
+
+.error-message {
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--error-color);
+  background-color: rgba(244, 67, 54, 0.1);
+  padding: 10px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+}
