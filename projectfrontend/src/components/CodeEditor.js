@@ -1,50 +1,54 @@
 // frontend/src/components/ProblemEditor.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CodeMirror from '@uiw/react-codemirror';
 import { python } from '@codemirror/lang-python';
+import { useParams } from 'react-router-dom';
 
 const CodeEditor = () => {
-  // Problem data - this could also come from an API
-  const problem = {
-    title: "Two Sum",
-    description: "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice.",
-    exampleInput: "[2, 7, 11, 15], target = 9",
-    exampleOutput: "[0, 1]",
-    functionTemplate: `def two_sum(nums, target):
-    # Your code here
-    # Example solution:
-    for i in range(len(nums)):
-        for j in range(i + 1, len(nums)):
-            if nums[i] + nums[j] == target:
-                return [i, j]
-    return []
-`
-  };
-
-  const [code, setCode] = useState(problem.functionTemplate);
+  const { id } = useParams(); // Get problem ID from the URL
+  const [problem, setProblem] = useState(null);
+  const [code, setCode] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchProblem = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/problems/${id}`);
+        setProblem(response.data);
+        setCode(response.data.starter_code || ''); // Use starter code if available
+      } catch (err) {
+        setError(err.response ? err.response.data.error : 'Failed to fetch problem');
+      }
+    };
+
+    fetchProblem();
+  }, [id]);
+
+  if (!problem) {
+    return <div>Loading problem...</div>;
+  }
 
   const handleRun = async () => {
     setSubmitting(true);
     setResults(null);
     setError('');
-    
+
     try {
       const token = localStorage.getItem('token');
-      
+
       const response = await axios.post(
-        'http://localhost:5000/api/run',
-        { code },
+        'http://localhost:3000/api/run',
+        { code, problem_id: problem.id }, // Include `problem_id`
         {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-      
+
       // Handle the response
       if (response.data.error) {
         setError(response.data.error);
@@ -65,7 +69,7 @@ const CodeEditor = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:5000/api/submissions',
+        'http://localhost:3000/api/submissions',
         { code },
         {
           headers: {
@@ -98,10 +102,10 @@ const CodeEditor = () => {
               <h3>Example:</h3>
               <div className="example-block">
                 <div>
-                  <strong>Input:</strong> <code>{problem.exampleInput}</code>
+                  <strong>Input:</strong> <code>{problem.example_input}</code>
                 </div>
                 <div>
-                  <strong>Output:</strong> <code>{problem.exampleOutput}</code>
+                  <strong>Output:</strong> <code>{problem.example_output}</code>
                 </div>
               </div>
             </div>

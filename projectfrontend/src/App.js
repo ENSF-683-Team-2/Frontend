@@ -56,7 +56,7 @@ function App() {
               } 
             />
             <Route 
-              path="/problem" 
+              path="/problem/:id" 
               element={
                 isAuthenticated ? (
                   <CodeEditor />
