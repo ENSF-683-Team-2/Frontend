@@ -7,6 +7,7 @@
   --error-color: #e74c3c;
   --success-color: #2ecc71;
   --border-color: #ddd;
+  --analyze-color: #FF9800;
 }
 
 body {
@@ -328,7 +329,7 @@ button.nav-link {
   margin: 15px 0;
 }
 
-.run-btn, .submit-btn {
+.run-btn, .submit-btn, .analyze-btn {
   padding: 10px 20px;
   color: white;
   border: none;
@@ -352,6 +353,19 @@ button.nav-link {
 
 .submit-btn:hover {
   background-color: #3a7bc8;
+}
+
+.analyze-btn {
+  background-color: #ff9901;
+}
+
+.analyze-btn:hover {
+  background-color: #aa6701; /* Darker shade of orange */
+}
+
+.run-btn:disabled, .submit-btn:disabled, .analyze-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
 
 .results-container {
@@ -440,4 +454,27 @@ button.nav-link {
   padding: 10px;
   border-radius: 4px;
   white-space: pre-wrap;
+}
+
+.feedback-container {
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 4px;
+  background-color: rgba(255, 152, 0, 0.05); /* Light orange background */
+  border-left: 4px solid var(--analyze-color);
+}
+
+.feedback-container h3 {
+  color: var(--analyze-color);
+  margin-bottom: 10px;
+}
+
+.feedback-message {
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--text-color);
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }

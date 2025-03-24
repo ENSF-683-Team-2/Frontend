@@ -12,6 +12,8 @@ const CodeEditor = () => {
   const [submitting, setSubmitting] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
+  const [feedback, setFeedback] = useState('');
+  const [analyzing, setAnalyzing] = useState(false);
 
   useEffect(() => {
     const fetchProblem = async () => {
@@ -90,6 +92,55 @@ const CodeEditor = () => {
     }
   };
 
+  const handleAnalyze = async () => {
+    setAnalyzing(true);
+    setFeedback(''); // Clear previous feedback
+    setError('');
+  
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:3000/api/analyze', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code, problem_id: problem.id }),
+      });
+  
+      if (!response.ok) throw new Error('Failed to analyze code');
+  
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let accumulatedFeedback = '';
+  
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value);
+        // Parse each line (Ollama sends JSON objects per line)
+        chunk.split('\n').forEach(line => {
+          if (line.trim()) {
+            const data = JSON.parse(line);
+            if (data.response) {
+              accumulatedFeedback += data.response;
+              setFeedback(accumulatedFeedback); // Update UI incrementally
+            }
+          }
+        });
+      }
+    } catch (err) {
+      console.error('Error analyzing code:', err);
+      setError(err.message || 'Failed to get feedback from server');
+    } finally {
+      setAnalyzing(false);
+    }
+  };
+
+  if (!problem) {
+    return <div>Loading problem...</div>;
+  }
+
   return (
     <div className="problem-view">
       <div className="problem-container">
@@ -131,12 +182,22 @@ const CodeEditor = () => {
             <button onClick={handleSubmit} disabled={submitting} className="submit-btn">
               {submitting ? 'Submitting...' : 'Submit Solution'}
             </button>
+            <button onClick={handleAnalyze} disabled={analyzing} className="analyze-btn">
+              {analyzing ? 'Analyzing...' : 'Get Feedback'}
+            </button>
           </div>
           
           {error && (
             <div className="error-output">
               <h3>Error</h3>
               <pre className="error-message">{error}</pre>
+            </div>
+          )}
+
+          {feedback && (
+            <div className="feedback-container">
+              <h3>Feedback</h3>
+              <pre className="feedback-message">{feedback}</pre>
             </div>
           )}
           

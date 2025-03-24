@@ -39,7 +39,7 @@ function App() {
               path="/login" 
               element={
                 isAuthenticated ? (
-                  <Navigate to="/problem" />
+                  <Navigate to="/problem/1" />
                 ) : (
                   <Login setIsAuthenticated={setIsAuthenticated} />
                 )
@@ -49,7 +49,7 @@ function App() {
               path="/register" 
               element={
                 isAuthenticated ? (
-                  <Navigate to="/problem" />
+                  <Navigate to="/problem/1" />
                 ) : (
                   <Register setIsAuthenticated={setIsAuthenticated} />
                 )
@@ -69,7 +69,7 @@ function App() {
               path="/" 
               element={
                 isAuthenticated ? (
-                  <Navigate to="/problem" />
+                  <Navigate to="/problem/1" />
                 ) : (
                   <Navigate to="/login" />
                 )
