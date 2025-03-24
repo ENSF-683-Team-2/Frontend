@@ -14,6 +14,7 @@ const CodeEditor = () => {
   const [error, setError] = useState('');
   const [feedback, setFeedback] = useState('');
   const [analyzing, setAnalyzing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchProblem = async () => {
@@ -28,10 +29,6 @@ const CodeEditor = () => {
 
     fetchProblem();
   }, [id]);
-
-  if (!problem) {
-    return <div>Loading problem...</div>;
-  }
 
   const handleRun = async () => {
     setSubmitting(true);
@@ -72,7 +69,7 @@ const CodeEditor = () => {
       const token = localStorage.getItem('token');
       const response = await axios.post(
         'http://localhost:3000/api/submissions',
-        { code },
+        { code, problem_id: problem.id },
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -89,6 +86,37 @@ const CodeEditor = () => {
       setError(err.response ? err.response.data.error : 'An error occurred');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleLoadPrevious = async () => {
+    setLoading(true);
+    setError('');
+    
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(
+        'http://localhost:3000/api/submissions',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      
+      // Find the most recent submission for this problem
+      const submissions = response.data.submissions;
+      const latestSubmission = submissions.find(sub => sub.problem_id === parseInt(problem.id));
+      
+      if (latestSubmission) {
+        setCode(latestSubmission.code);
+      } else {
+        setError('No previous submissions found for this problem');
+      }
+    } catch (err) {
+      setError(err.response ? err.response.data.error : 'Failed to load previous submission');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -172,6 +200,9 @@ const CodeEditor = () => {
               extensions={[python()]}
               onChange={(value) => setCode(value)}
               theme="dark"
+              basicSetup={{
+                tabSize: 4
+              }}
             />
           </div>
           
@@ -181,6 +212,9 @@ const CodeEditor = () => {
             </button>
             <button onClick={handleSubmit} disabled={submitting} className="submit-btn">
               {submitting ? 'Submitting...' : 'Submit Solution'}
+            </button>
+            <button onClick={handleLoadPrevious} disabled={loading} className="load-btn">
+              {loading ? 'Loading...' : 'Load Previous'}
             </button>
             <button onClick={handleAnalyze} disabled={analyzing} className="analyze-btn">
               {analyzing ? 'Analyzing...' : 'Get Feedback'}
