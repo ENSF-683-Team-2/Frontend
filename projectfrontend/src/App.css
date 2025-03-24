@@ -478,3 +478,41 @@ button.nav-link {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+
+.difficulty {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.difficulty.low {
+  background-color: #4caf50;
+  color: white;
+}
+
+.difficulty.medium {
+  background-color: #ff9800;
+  color: white;
+}
+
+.difficulty.high {
+  background-color: #f44336;
+  color: white;
+}
+
+.problem-difficulty {
+  margin: 10px 0;
+}
+
+.problem-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.problem-card p {
+  flex-grow: 1;
+  margin-bottom: 15px;
+}

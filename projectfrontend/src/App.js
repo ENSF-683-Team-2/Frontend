@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Login from './components/Login';
 import Register from './components/Register';
 import CodeEditor from './components/CodeEditor';
+import ProblemsList from './components/ProblemsList';
 import Navbar from './components/Navbar';
 import './App.css';
 
@@ -39,7 +40,7 @@ function App() {
               path="/login" 
               element={
                 isAuthenticated ? (
-                  <Navigate to="/problem/1" />
+                  <Navigate to="/problems" />
                 ) : (
                   <Login setIsAuthenticated={setIsAuthenticated} />
                 )
@@ -49,9 +50,19 @@ function App() {
               path="/register" 
               element={
                 isAuthenticated ? (
-                  <Navigate to="/problem/1" />
+                  <Navigate to="/problems" />
                 ) : (
                   <Register setIsAuthenticated={setIsAuthenticated} />
+                )
+              } 
+            />
+            <Route 
+              path="/problems" 
+              element={
+                isAuthenticated ? (
+                  <ProblemsList />
+                ) : (
+                  <Navigate to="/login" />
                 )
               } 
             />
@@ -69,7 +80,7 @@ function App() {
               path="/" 
               element={
                 isAuthenticated ? (
-                  <Navigate to="/problem/1" />
+                  <Navigate to="/problems" />
                 ) : (
                   <Navigate to="/login" />
                 )
